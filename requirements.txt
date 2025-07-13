@@ -1,0 +1,6 @@
+fastapi
+uvicorn
+transformers[torch]
+accelerate
+bitsandbytes
+python-multipart
