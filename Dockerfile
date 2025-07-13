@@ -1,22 +1,21 @@
-# Gunakan image dasar dengan Python dan CUDA support
-FROM pytorch/pytorch:2.1.0-cuda11.8-cudnn8-runtime
+# Gunakan base image ringan + PyTorch support
+FROM python:3.10-slim
 
-# Set direktori kerja
+# Buat working directory
 WORKDIR /app
 
-# Copy file ke dalam container
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+# Copy semua file
+COPY . .
 
-# Salin semua file yang dibutuhkan
-COPY app.py .
-COPY start.sh .
+# Install pip + dependencies
+RUN pip install --upgrade pip && \
+    pip install -r requirements.txt
 
-# Beri izin eksekusi ke start.sh
+# Bikin start.sh bisa dijalankan
 RUN chmod +x start.sh
 
-# Ekspose port yang akan dipakai FastAPI
+# Expose port
 EXPOSE 8000
 
-# Jalankan aplikasi
+# Jalankan server
 CMD ["./start.sh"]
